@@ -1,0 +1,8 @@
+h1, p {
+  font-family: Lato;
+}
+
+.table-responsive{
+ height:250px;  
+  overflow:scroll !important;
+}
