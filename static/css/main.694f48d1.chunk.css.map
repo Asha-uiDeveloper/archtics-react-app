@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,KACE,gBACF,CAEA,kBACC,YAAY,CACX,yBACF","file":"main.694f48d1.chunk.css","sourcesContent":["h1, p {\n  font-family: Lato;\n}\n\n.table-responsive{\n height:250px;  \n  overflow:scroll !important;\n}"]}
