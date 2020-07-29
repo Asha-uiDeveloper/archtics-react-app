@@ -10,9 +10,9 @@ const Table = ({tableData}) =>{
   </thead>
   <tbody>
     {tableData.map(tbodyValue => <tr key={tbodyValue.variable}>
-      <td>{tbodyValue.Name}</td>
-      <td>{tbodyValue.Equation}</td>
-      <td>{tbodyValue.Value}</td>
+      <td>{tbodyValue.name}</td>
+      <td>{tbodyValue.equation}</td>
+      <td>{tbodyValue.value}</td>
     </tr>)}      
   </tbody>
 </table>

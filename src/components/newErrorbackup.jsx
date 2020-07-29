@@ -22,25 +22,25 @@ class DropDown extends React.Component {
             priceCodesList: [],
             filteredData: [],
             CheckBoxList: [],
-            basePriceCodeData:[]
+            basePriceCodeData: []
         };
 
-    //    this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
     }
 
-    handleNetworkCall = () =>{
-        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=ducks@msp&sid=727A14AD92AD474C9D86D4DBABE09984`
+    handleNetworkCall = () => {
+        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=ducks@msp&sid=A80D27B47A8E4C8AA0FA454F3A8E2479`
         axios.get(PRICE_URL, {
-         params: {
+            params: {
                 "eventId": "105042"
-         }
-        }, {
-                headers: { "Access-Control-Allow-Origin": "*" }
             }
+        }, {
+            headers: { "Access-Control-Allow-Origin": "*" }
+        }
         )
             .then(response => {
-                if(response.status === 200){
+                if (response.status === 200) {
                     const basePriceCodeData = response.data.result.data.rules;
                     console.log('basePriceCodeData', basePriceCodeData);
                     let priceCodesList = [].concat.apply([], basePriceCodeData.map(values =>
@@ -52,27 +52,27 @@ class DropDown extends React.Component {
                     })
                 }
             })
-            .catch(error =>console.log("error", error))
+            .catch(error => console.log("error", error))
     }
 
     componentDidMount() {
-        this.handleNetworkCall();        
+        this.handleNetworkCall();
     }
 
-    // handleChange(event) {
-    //     const  Rules  = this.state.basePriceCodeData;
-    //     Rules.map(rule =>
-    //         rule.Price_Codes.map(code => {
-    //             if (code === event) {
-    //                 this.setState({ rules: rule });
-    //             }
-    //         }))
-    // }
+    handleChange(event) {
+        const Rules = this.state.basePriceCodeData;
+        Rules.map(rule =>
+            rule.Price_Codes.map(code => {
+                if (code === event) {
+                    this.setState({ rules: rule });
+                }
+            }))
+    }
 
-    // handleClick() {
-    //     //   alert('Your favorite flavor is: ' + this.state.value);
-    //     console.log("clicked");
-    // }
+    handleClick() {
+        //   alert('Your favorite flavor is: ' + this.state.value);
+        console.log("clicked");
+    }
 
     handleToggle = () => {
 
@@ -99,18 +99,20 @@ class DropDown extends React.Component {
         } else {
             this.setState({ filteredData });
         }
-    }
 
+        //   console.log(filteredData);
+    }
     handleOkBtn = (event) => {
         this.handleToggle();
         const Rules = this.state.basePriceCodeData
         let filteredRule = [];
         this.state.CheckBoxList.map(val =>
-            Rules.map(rule => {
-                    if (rule.base_pricecode === val) {
+            Rules.map(rule =>
+                rule.Price_Codes.map(code => {
+                    if (code === val) {
                         filteredRule.push(rule);
                     }
-                }));
+                })));
         this.setState({ rules: filteredRule });
         // this.setState({ rules: rule });
     }
@@ -121,7 +123,7 @@ class DropDown extends React.Component {
         if (target.checked) {
             this.state.CheckBoxList.push(value);
         } else {
-            this.setState({selectAll: false});
+            this.setState({ selectAll: false });
             var index = array.indexOf(value)
             if (index !== -1) {
                 array.splice(index, 1);
@@ -131,7 +133,7 @@ class DropDown extends React.Component {
     }
 
     render() {
-        const  Rules  = this.state.basePriceCodeData
+        const Rules = this.state.basePriceCodeData
         const { tableData } = this.state;
         const { Base_price } = this.state;
         const { Decision_makers } = this.state;
@@ -153,13 +155,16 @@ class DropDown extends React.Component {
                     {/* <MultiSelector /> */}
                     {rules.length === 0 ?
                         <div className='row'>
-                            {this.state.basePriceCodeData.map(rule =>
-                             {
+                            {this.state.basePriceCodeData.map(values =>
+                                values.Price_Codes.map(val =>
+                                    Rules.map(rule =>
+                                        rule.Price_Codes.map(code => {
+                                            if (code === val) {
                                                 return <>
-                                                  
-                                                    {rule.base_pricecode === null ? 
-                                                        <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:</div>{this.state.basePriceCodeData[0].Base_Price_Code}</div> : <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:   <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${rule.derived} New_Host_Price = ${rule.new_host_price}`}>&#xf05a;</i></div>
-                                                         </div>}
+
+                                                    {rule.Base_Price_Code === null ?
+                                                        <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:</div>{this.state.basePriceCodeData[0].Base_Price_Code}</div> : <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:   <span class="badge badge-secondary">{rule.Base_Price_Code}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${rule.DERIVED} New_Host_Price = ${rule.New_Host_Price}`}>&#xf05a;</i></div>
+                                                        </div>}
                                                     {/* <div className="col-2"> <table className="" border="1" style={{ marginTop: 20 }} >
                                                         <thead className="">
                                                             <tr>
@@ -173,32 +178,32 @@ class DropDown extends React.Component {
                                                             </tr>)}
                                                         </tbody>
                                                     </table></div> */}
-                                                    {rule.variables.length !== 0 ?
+                                                    {rule.Variables.length !== 0 ?
                                                         <div className="col-5">
-                                                            <Table tableData={rule.variables} />
+                                                            <Table tableData={rule.Variables} />
                                                         </div>
                                                         :
                                                         <div className="col-5">
-                                                            <Table tableData={this.state.basePriceCodeData[0].variables} />
+                                                            <Table tableData={this.state.basePriceCodeData[0].Variables} />
                                                         </div>
                                                     }
                                                     <div className="col-5">
-                                                        {rule.decision_makers === null ? < SubTable tableData={this.state.basePriceCodeData[0]["decision_makers"]} /> : <SubTable tableData={rule.decision_makers} />}
+                                                        {rule.Decision_Makers === null ? < SubTable tableData={this.state.basePriceCodeData[0]["Decision_Makers"]} /> : <SubTable tableData={rule.Decision_Makers} />}
                                                     </div>
                                                 </>
                                             }
-                                        )}
+                                        }))))}
 
-                        </div> :  
-                        rules.map(rule => 
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <div style={{ marginTop: 30 }}>Base_Price_Code:
-                                    <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${rule.derived} New_Host_Price = ${rule.new_host_price}`}>&#xf05a;</i>
-                                            </div>
-                                    
-                                        </div>
-                                        {/* <div className="col-2 ">
+                        </div> :
+                        rules.map(rule =>
+                            <div className="row">
+                                <div className="col-12">
+                                    <div style={{ marginTop: 30 }}>Base_Price_Code:
+                                    <span class="badge badge-secondary">{rule.Base_Price_Code}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={rule.DERIVED}>&#xf05a;</i>
+                                    </div>
+
+                                </div>
+                                {/* <div className="col-2 ">
                                     <table className="" border="1" style={{ marginTop: 20 }} >
                                                 <thead className="">
                                                     <tr>
@@ -213,14 +218,14 @@ class DropDown extends React.Component {
                                                 </tbody>
                                             </table>
                                         </div> */}
-                                        <div className='col-6 '>
-                                            <Table tableData={rule.variables} />
-                                        </div>
-                                        <div className="col-4">
-                                            < SubTable tableData={rule.decision_makers} />
-                                        </div>
-                                    </div>
-                                )
+                                <div className='col-6 '>
+                                    <Table tableData={rule.variables} />
+                                </div>
+                                <div className="col-4">
+                                    < SubTable tableData={rule.decision_makers} />
+                                </div>
+                            </div>
+                        )
                     }
                 </form>
             </div>

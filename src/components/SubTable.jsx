@@ -11,7 +11,7 @@ const SubTable = ({ tableData }) => {
         </thead>
         <tbody>
             {tableData.map(tbodyValue => <tr key={tbodyValue}>
-                <td>{tbodyValue.Control_Variable}</td>
+                <td>{tbodyValue.control_variable}</td>
                 <td>{tbodyValue.Value}</td>
             </tr>)}
         </tbody>
