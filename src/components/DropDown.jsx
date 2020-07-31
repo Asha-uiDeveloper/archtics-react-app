@@ -30,10 +30,10 @@ class DropDown extends React.Component {
     }
 
     handleNetworkCall = () =>{
-        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=messina@msp&sid=1AD095FBD9DA46DBBDB0A62B4E0D7E2E`
+        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=messina@msp&sid=54DBD6F158324085BB1C98FD59B73D3D`
         axios.get(PRICE_URL, {
          params: {
-                "eventId": "105042"
+                "eventId": "104180"
          }
         }, {
                 headers: { "Access-Control-Allow-Origin": "*" }
