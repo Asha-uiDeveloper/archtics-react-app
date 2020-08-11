@@ -7,7 +7,7 @@ const jsonData = require('../components/dummyjson.json')
 const MultiSelector =  (props) => {
     return (
         <div className="dropdown">
-            <button className="dropdown-toggle" data-toggle="dropdown" onClick={props.onStoreChange} >FilterBy:Base Price Code</button>
+            <button className="dropdown-toggle" data-toggle="dropdown" onClick={props.onStoreChange} >FilterBy:Price Code</button>
             
             <ul className="dropdown-menu" style={{ display:  props.showStore ? 'block' : 'none' } } >
                 <input id="SearchBar"  onChange={props.sreachText} placeholder="search here" style={{ width: "100%" }}></input><li><input type="checkbox" className="selectALL" onClick={props.selectAllClicked}></input>Select All</li> 

@@ -1,115 +1,158 @@
 {
 "tabledata" :{
-    "Event Client Id": "0400492ADBD15A6D",
+    "event_id": "104180",
+    "new_host_price": "100",
     "Rules": [
         {
-            "Base_Price_Code": "A_",
-            "DERIVED": 10,
-            "New_Host_Price": 100,
+            "base_pricecode": "AX_",
             "Decision_Makers": [
                 {
-                    "Control_Variable": "PriceCode_Update_Type1",
-                    "Value": "Update"
+                    "Value": "false",
+                    "control_variable": "pricecode_update_type"
                 },
                 {
-                    "Control_Variable": "Always_Update_Counter1",
-                    "Value": "true"
+                    "Value": "false",
+                    "control_variable": "always_update_counter"
                 },
                 {
-                    "Control_Variable": "Parent_Price_Code_New_Code1",
-                    "Value": "false"
+                    "Value": "false",
+                    "control_variable": "parent_pricecode_new_code"
                 },
                 {
-                    "Control_Variable": "Parent_Price_Code_Old_Code_Disable1",
-                    "Value": "false"
+                    "Value": "0",
+                    "control_variable": "parent_pricecode_old_code_disable"
                 },
                 {
-                    "Control_Variable": "Event_in_Plan_Price_Code1",
-                    "Value": "true"
+                    "Value": "1",
+                    "control_variable": "update_avail_seatse"
                 },
                 {
-                    "Control_Variable": "update_avail_seats1",
-                    "Value": "true"
+                    "Value": "true",
+                    "control_variable": "old_price_code_offsale"
+                },
+                {
+                    "Value": "true",
+                    "control_variable": "old_price_code_inet_offsale"
                 }
             ],
             "Variables": [
                 {
-                    "Name": "pc_ticket",
-                    "Equation": "ROUNDDOWN(price*.8,.05)/1.05",
-                    "Value": 78.05
+                    "equation": "22",
+                    "name": "archtics_price",
+                    "value": "22"
                 },
                 {
-                    "Name": "pc_tax",
-                    "Equation": "pc_ticket * 0.10 ",
-                    "Value": 7.80
+                    "equation": "10.0",
+                    "name": "pc_ticket",
+                    "value": "10"
                 },
                 {
-                    "Name": "archtics_price",
-                    "Equation": "pc_ticket + pc_tax",
-                    "Value": 85.85
+                    "equation": "10.0",
+                    "name": "pc_tax",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_licfee",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other1",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other2",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other3",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other4",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other5",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other6",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other7",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_other8",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "printed_price",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "te_min_posting_price",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "te_max_posting_price",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "tax_rate_a",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "tax_rate_b",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "tax_rate_c",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_info1",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_info2",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_info3",
+                    "value": "10"
+                },
+                {
+                    "equation": "10.0",
+                    "name": "pc_info4",
+                    "value": "10"
                 }
             ],
-            "Price_Codes": [
-                "AA",
-                "AA01",
-                "AA02"
-            ]
-        },
-        {
-            "Base_Price_Code": "B_",
-            "DERIVED": 10,
-            "New_Host_Price": 100,
-            "Decision_Makers":[
-                {
-                    "Control_Variable": "PriceCode_Update_Type",
-                    "Value" :"Update"
-                },
-                {
-                    "Control_Variable": "Always_Update_Counter",
-                    "Value": "true"
-                },
-                {
-                    "Control_Variable": "Parent_Price_Code_New_Code",
-                    "Value": "false"
-                },
-                {
-                    "Control_Variable": "Parent_Price_Code_Old_Code_Disable",
-                    "Value": "false"
-                },
-                {
-                    "Control_Variable": "Event_in_Plan_Price_Code",
-                    "Value": "true"
-                },
-                {
-                    "Control_Variable": "update_avail_seats",
-                    "Value": "true"
-                }
-            ],
-            "Price_Codes": [
-                "BA",
-                "BA01",
-                "BB",
-                "BB01",
-                "BB02"
-            ],
-            "Variables": [
-                {
-                    "Name": "pc_ticket",
-                    "Equation": "price.* 1.10",
-                    "Value": 78.05
-                },
-                {
-                    "Name": "pc_tax",
-                    "Equation": "pc_ticket * 0.05 ",
-                    "Value": 7.80
-                },
-                {
-                    "Name": "archtics_price",
-                    "Equation": "pc_ticket + pc_tax + pc_licfee",
-                    "Value": 85.85
-                }
+            "pricecodes": [
+                "AX1",
+                "AX2"
             ]
         }
-    ]
+    ],
+    "derived": "10"
 }
 }

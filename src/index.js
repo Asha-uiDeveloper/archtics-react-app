@@ -5,7 +5,8 @@ import { render } from 'react-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
-import DropDown from './components/DropDown';
+import BasePriceCode from './components/BasePriceCode';
+import PriceCode from './components/PriceCodes';
 
 
 class App extends Component {
@@ -18,7 +19,8 @@ class App extends Component {
 
   render() {
     return <div className="container" style={{marginTop:30}}>
-        <DropDown/>
+      {/* <BasePriceCode/> */}
+        <PriceCode/>
       </div>
   }
 }

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Table from '../components/Table';
-import SubTable from '../components/SubTable';
+import Table from './Table';
+import SubTable from './SubTable';
 import MultiSelector from '../Pages/CheckBox';
 import { ajax } from 'jquery';
 const jsonData = require('./dummyjson.json')
 
 
 
-class DropDown extends React.Component {
+class BasePriceCode extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,7 +30,7 @@ class DropDown extends React.Component {
     }
 
     handleNetworkCall = () =>{
-        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=messina@msp&sid=54DBD6F158324085BB1C98FD59B73D3D`
+        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=messina@msp&sid=EF27F04496FF4A25BABC431240A643A5`
         axios.get(PRICE_URL, {
          params: {
                 "eventId": "104180"
@@ -227,4 +227,4 @@ class DropDown extends React.Component {
         );
     }
 }
-export default DropDown;
+export default BasePriceCode;
