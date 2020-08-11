@@ -166,7 +166,7 @@ class PriceCode extends React.Component {
     }
 
     render() {
-        const { Rules ,priceCodeData} = this.state
+        const { Rules } = jsonData.tabledata
         const { tableData } = this.state;
         const { Base_price } = this.state;
         const { Decision_makers } = this.state;
@@ -189,7 +189,7 @@ class PriceCode extends React.Component {
                     {/* <MultiSelector /> */}
                     {rules.length === 0 ?
                         <div className='row'>
-                            {priceCodeData.map(values =>
+                            {jsonData.tabledata.Rules.map(values =>
                                 values.pricecodes.map(val =>
                                     Rules.map(rule =>
                                         rule.pricecodes.map(code => {
