@@ -5,7 +5,10 @@ const Table = ({tableData}) =>{
   return <table className=" " border="1" style={{ marginTop: 20 }} >
     <thead className="">
     <tr>
-      {tableHeader.map(thValue => <th key={thValue} scope="col">{thValue}</th>)}      
+      {/* {tableHeader.map(thValue => <th key={thValue} scope="col">{thValue}</th>)}       */}
+      <th>Variable</th>
+      <th>Equation</th>
+      <th>Evaluated Result</th>
     </tr>
   </thead>
   <tbody>

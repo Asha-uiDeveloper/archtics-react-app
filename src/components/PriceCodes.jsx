@@ -15,21 +15,25 @@ class PriceCode extends React.Component {
             value: '',
             tableData: [],
             Base_price: null,
-            Decision_makers: null,
+            decision_makers: null,
             rules: [],
             showStore: false,
             selectAll: true,
             priceCodesList: [],
             filteredData: [],
-            CheckBoxList: []
+            CheckBoxList: [],
+            priceCodeData :[],
+            price :null,
+            derived:null,
+            selected: true
         };
 
-        this.handleChange = this.handleChange.bind(this);
+       // this.handleChange = this.handleChange.bind(this);
 
     }
 
     handleNetworkCall = () => {
-        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/priceCode?user=ducks@msp&sid=C023A1E06CE64D049B8B7967038ED811`
+        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/priceCode?user=ducks@msp&sid=C5760FE13E6D4BDEA8FA0F32E4F1B9F5`
         axios.get(PRICE_URL, {
             params: {
                 "eventId": "105042"
@@ -43,13 +47,17 @@ class PriceCode extends React.Component {
             .then(response =>  {
             if (response.status === 200) {
                 const priceCodeData = response.data.result.data.rules;
+                const price = response.data.result.data.price;
+                const derived = response.data.result.data.derived;
                 console.log('priceCodeData', priceCodeData);
                 let priceCodesList = [].concat.apply([], priceCodeData.map(values =>
                     values.pricecodes));
                 let filteredData = [].concat.apply([], priceCodesList);
                 console.log(priceCodesList, filteredData);
+                priceCodesList.sort();
+                filteredData.sort();
                 this.setState({
-                    priceCodesList, filteredData, priceCodeData
+                    priceCodesList, filteredData, priceCodeData,price,derived
                 })
             }
         })
@@ -58,33 +66,33 @@ class PriceCode extends React.Component {
 
     componentDidMount() {
         this.handleNetworkCall("1232");
-        let priceCodesList = [].concat.apply([], jsonData.tabledata.Rules.map(values =>
-            values.pricecodes));
-        let filteredData = [].concat.apply([], priceCodesList);
-        console.log(priceCodesList, filteredData);
-        this.setState({
-            priceCodesList, filteredData
-        })
+        // let priceCodesList = [].concat.apply([], jsonData.tabledata.Rules.map(values =>
+        //     values.pricecodes));
+        // let filteredData = [].concat.apply([], priceCodesList);
+        // console.log(priceCodesList, filteredData);
+        // this.setState({
+        //     priceCodesList, filteredData
+        // })
     }
 
-    handleChange(event) {
-        const { Rules } = jsonData.tabledata
-        Rules.map(rule =>
-            rule.pricecodes.map(code => {
-                if (code === event) {
-                    this.setState({ rules: rule });
-                }
-            }))
+    // handleChange(event) {
+    //     const { Rules } = this.state.priceCodeData;
+    //     Rules.map(rule =>
+    //         rule.pricecodes.map(code => {
+    //             if (code === event) {
+    //                 this.setState({ rules: rule });
+    //             }
+    //         }))
 
-        // for (var i = 0; i < jsonData.tabledata.Rules.length; i++) {
-        //     if (jsonData.tabledata.Rules[i].Price_Codes.indexOf(event.target.value) !== -1) {
-        //         console.log(jsonData.tabledata.Rules[i].Variables);
-        //         console.log(jsonData.tabledata.Rules[i]["Decision Makers"]);
-        //         console.log(jsonData.tabledata.Rules[i]["Base Price Code"]);
-        //     }
+    //     // for (var i = 0; i < jsonData.tabledata.Rules.length; i++) {
+    //     //     if (jsonData.tabledata.Rules[i].Price_Codes.indexOf(event.target.value) !== -1) {
+    //     //         console.log(jsonData.tabledata.Rules[i].Variables);
+    //     //         console.log(jsonData.tabledata.Rules[i]["Decision Makers"]);
+    //     //         console.log(jsonData.tabledata.Rules[i]["Base Price Code"]);
+    //     //     }
 
-        // }
-    }
+    //     // }
+    // }
 
     // handlebgColor = () => {
     //      CheckBoxList.map(val => val === code) ? 'green' : ''
@@ -101,14 +109,14 @@ class PriceCode extends React.Component {
 
     }
     handleSelectAll = () => {
-
         this.setState({ selectAll: !this.state.selectAll });
         if (!this.state.selectAll === true) {
+            this.state.selected = true;
             this.setState({ CheckBoxList: this.state.priceCodesList });
         } else {
+            this.state.selected = false;
             this.setState({ CheckBoxList: [] });
         }
-
     }
     handleSearch = (event) => {
 
@@ -125,7 +133,7 @@ class PriceCode extends React.Component {
     }
     handleOkBtn = (event) => {
         this.handleToggle();
-        const { Rules } = jsonData.tabledata
+        const  Rules  = this.state.priceCodeData;
         let filteredRule = [];
         let bp=[];
         this.state.CheckBoxList.map(val =>
@@ -166,7 +174,8 @@ class PriceCode extends React.Component {
     }
 
     render() {
-        const { Rules } = jsonData.tabledata
+      //  const { Rules } = jsonData.tabledata;
+        const Rules = this.state.priceCodeData
         const { tableData } = this.state;
         const { Base_price } = this.state;
         const { Decision_makers } = this.state;
@@ -175,7 +184,7 @@ class PriceCode extends React.Component {
         console.log('Rules', rules);
         return (
             <div>
-                <MultiSelector sreachText={this.handleSearch} InputChange={this.handleInputChange} onStoreChange={this.handleToggle} okBtnClicked={this.handleOkBtn} showStore={this.state.showStore} selectAllClickedbtn={this.state.selectAll} selectAllClicked={this.handleSelectAll} selectedPC={this.state.filteredData} />
+                <MultiSelector sreachText={this.handleSearch} InputChange={this.handleInputChange} onStoreChange={this.handleToggle} okBtnClicked={this.handleOkBtn} showStore={this.state.showStore} selectAllClickedbtn={this.state.selectAll} selectAllClicked={this.handleSelectAll} selectedPC={this.state.filteredData} selected={this.state.selected} />
                 <form >
                     {/* <label>
                         Filter By:
@@ -189,15 +198,12 @@ class PriceCode extends React.Component {
                     {/* <MultiSelector /> */}
                     {rules.length === 0 ?
                         <div className='row'>
-                            {jsonData.tabledata.Rules.map(values =>
-                                values.pricecodes.map(val =>
-                                    Rules.map(rule =>
-                                        rule.pricecodes.map(code => {
-                                            if (code === val) {
-                                                return <>
+                            {this.state.priceCodeData.map(rule =>
+                                {                                                                                   
+                                    return <>
 
                                                     {rule.base_pricecode === null ?
-                                                        <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:</div>{jsonData.tabledata.Rules[0].base_pricecode}</div> : <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:   <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 630 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${rule.DERIVED} New_Host_Price = ${rule.New_Host_Price}`}>&#xf05a;</i></div>
+                                            <div className="col-12"><div style={{ marginTop: 30 }}>Pattern:</div>{jsonData.tabledata.Rules[0].base_pricecode}</div> : <div className="col-12"><div style={{ marginTop: 30 }}>Pattern:   <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 630 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${this.state.derived} New_Host_Price = ${this.state.price}`}>&#xf05a;</i></div>
                                                         </div>}
                                                     <div className="col-2"> <table className="" border="1" style={{ marginTop: 20 }} >
                                                         <thead className="">
@@ -207,31 +213,31 @@ class PriceCode extends React.Component {
                                                         </thead>
                                                         <tbody>
                                                             {rule.pricecodes.map(tbodyValue => <tr key={tbodyValue}>
-                                                                <td >{tbodyValue}</td>
+                                                                <td bg-color={this.state.CheckBoxList.indexOf(tbodyValue)!=-1 ? 'green' : ""}>{tbodyValue}</td>
                                                             </tr>)}
                                                         </tbody>
                                                     </table></div>
-                                                    {rule.Variables.length !== 0 ?
+                                                    {rule.variables.length !== 0 ?
                                                         <div className="col-5">
-                                                            <Table tableData={rule.Variables} />
+                                                <Table tableData={rule.variables} />
                                                         </div>
                                                         :
                                                         <div className="col-5">
-                                                            <Table tableData={jsonData.tabledata.Rules[0].Variables} />
+                                                <Table tableData={jsonData.tabledata.Rules[0].variables} />
                                                         </div>
                                                     }
                                                     <div className="col-5">
-                                                        {rule.Decision_Makers === null ? < SubTable tableData={jsonData.tabledata.Rules[0]["Decision_Makers"]} /> : <SubTable tableData={rule.Decision_Makers} />}
+                                            {rule.decision_makers === null ? < SubTable tableData={jsonData.tabledata.Rules[0]["decision_makers"]} /> : <SubTable tableData={rule.decision_makers} />}
                                                     </div>
                                                 </>
-                                            }
-                                        }))))}
+                                }
+                                        )}
                         </div> :
                         rules.map(rule =>
                             <div className="row">
                                 <div className="col-12">
-                                    <div style={{ marginTop: 30 }}>Base_Price_Code:
-                                    <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 24, marginLeft: 630 }} class="fa" data-toggle="tooltip" title={rule.DERIVED}>&#xf05a;</i>
+                                    <div style={{ marginTop: 30 }}>Pattern:
+                                    <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 24, marginLeft: 630 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${this.state.derived} New_Host_Price = ${this.state.price}`}>&#xf05a;</i>
                                     </div>
 
                                 </div>
@@ -244,16 +250,16 @@ class PriceCode extends React.Component {
                                         </thead>
                                         <tbody>
                                             {rule.pricecodes.map(code => <tr key={code}>
-                                                <td >{code}</td>
+                                                <td bg-color={this.state.CheckBoxList.indexOf(code) != -1 ? 'green' : ""}>{code}</td>
                                             </tr>)}
                                         </tbody>
                                     </table>
                                 </div>
                                 <div className='col-6 '>
-                                    <Table tableData={rule.Variables} />
+                                    <Table tableData={rule.variables} />
                                 </div>
                                 <div className="col-4">
-                                    < SubTable tableData={rule.Decision_Makers} />
+                                    < SubTable tableData={rule.decision_makers} />
                                 </div>
                             </div>
                         )

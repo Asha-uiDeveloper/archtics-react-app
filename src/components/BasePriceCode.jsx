@@ -22,7 +22,9 @@ class BasePriceCode extends React.Component {
             priceCodesList: [],
             filteredData: [],
             CheckBoxList: [],
-            basePriceCodeData:[]
+            basePriceCodeData:[],
+            price: null,
+            derived: null
         };
 
     //    this.handleChange = this.handleChange.bind(this);
@@ -30,10 +32,10 @@ class BasePriceCode extends React.Component {
     }
 
     handleNetworkCall = () =>{
-        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=messina@msp&sid=EF27F04496FF4A25BABC431240A643A5`
+        const PRICE_URL = `https://dev.pricemaster.ticketmaster.com/admin/basePriceCode?user=ducks@msp&sid=11D7A4A1CCE048648BEAFF410DDFBAA9`
         axios.get(PRICE_URL, {
          params: {
-                "eventId": "104180"
+                "eventId": "105042"
          }
         }, {
                 headers: { "Access-Control-Allow-Origin": "*" }
@@ -42,13 +44,16 @@ class BasePriceCode extends React.Component {
             .then(response => {
                 if(response.status === 200){
                     const basePriceCodeData = response.data.result.data.rules;
-                    console.log('basePriceCodeData', basePriceCodeData);
+                    const price = response.data.result.data.price;
+                    const derived = response.data.result.data.derived;
                     let priceCodesList = [].concat.apply([], basePriceCodeData.map(values =>
                         values.base_pricecode));
                     let filteredData = [].concat.apply([], priceCodesList);
-                    console.log(priceCodesList, filteredData);
+                    priceCodesList.sort();
+                    filteredData.sort();
+                  //  console.log(priceCodesList, filteredData);
                     this.setState({
-                        priceCodesList, filteredData, basePriceCodeData
+                        priceCodesList, filteredData, basePriceCodeData,price,derived
                     })
                 }
             })
@@ -158,7 +163,7 @@ class BasePriceCode extends React.Component {
                                                 return <>
                                                   
                                                     {rule.base_pricecode === null ? 
-                                                        <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:</div>{this.state.basePriceCodeData[0].Base_Price_Code}</div> : <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:   <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${rule.derived} New_Host_Price = ${rule.new_host_price}`}>&#xf05a;</i></div>
+                                                        <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:</div>{this.state.basePriceCodeData[0].Base_Price_Code}</div> : <div className="col-12"><div style={{ marginTop: 30 }}>Base_Price_Code:   <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${this.state.derived} New_Host_Price = ${this.state.price}`}>&#xf05a;</i></div>
                                                          </div>}
                                                     {/* <div className="col-2"> <table className="" border="1" style={{ marginTop: 20 }} >
                                                         <thead className="">
@@ -194,7 +199,7 @@ class BasePriceCode extends React.Component {
                                     <div className="row">
                                         <div className="col-12">
                                             <div style={{ marginTop: 30 }}>Base_Price_Code:
-                                    <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${rule.derived} New_Host_Price = ${rule.new_host_price}`}>&#xf05a;</i>
+                                    <span class="badge badge-secondary">{rule.base_pricecode}</span><i style={{ fontSize: 18, marginLeft: 640 }} class="fa" data-toggle="tooltip" title={`DERIVED = ${this.state.derived} New_Host_Price = ${this.state.price}`}>&#xf05a;</i>
                                             </div>
                                     
                                         </div>
